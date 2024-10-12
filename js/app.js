@@ -6,15 +6,23 @@ function adicionar() {
     let produto = document.getElementById('produto').value;
     let nomeProduto = produto.split('-')[0];
     let valorUnitario =  produto.split('R$')[1]; 
-    let quantidade = parseInt(document.getElementById('quantidade').value);
+    let quantidade = document.getElementById('quantidade').value;
+    quantidade = quantidade.trim(); // Remove espaços em branco
+    quantidade = parseFloat(quantidade); // Converte para número
 
     if(valorUnitario == 0) {
         alert(`O preço unitário do produto selecionado está incorreta. O valor digitado foi ${valorUnitario}!`);
+        document.getElementById('quantidade').value = '';
     }
-    else if(quantidade <= 0){
-        alert(`A quantidade do produto selecionado esta incorreta. O valor digitado foi ${quantidade}!`);
+    else if(isNaN(quantidade)){
+        alert(`A quantidade do produto selecionado está incorreta. O valor digitado foi nulo ou vazio!`);
+        document.getElementById('quantidade').value = '';
     }
-    else if((valorUnitario > 0.01) && (quantidade > 0)){
+    else if(quantidade <= 0.00){
+        alert(`A quantidade do produto selecionado está incorreta. O valor digitado foi ${quantidade}!`);
+        document.getElementById('quantidade').value = '';
+    }
+    else if((valorUnitario >= 0.01) && (quantidade >= 0.01)){
         //calcular o preço, o nosso subtotal
         let preco = quantidade * valorUnitario;
         let carrinho = document.getElementById('lista-produtos');
